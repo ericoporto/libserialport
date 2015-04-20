@@ -37,6 +37,8 @@ Dependencies
 
 No other libraries are required.
 
+Optionally (in order to run the unit-tests) Check >= 0.9.4 is needed.
+
 Building
 ========
 

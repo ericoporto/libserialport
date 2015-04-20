@@ -41,7 +41,7 @@ AH_BOTTOM([#if HAVE_STRUCT_TERMIOS_C_ISPEED && HAVE_STRUCT_TERMIOS_C_OSPEED
 #endif])
 
 # We require at least automake 1.11 (needed for 'silent rules').
-AM_INIT_AUTOMAKE([1.11 -Wall -Werror no-define check-news])
+AM_INIT_AUTOMAKE([1.11 -Wall -Werror no-define check-news subdir-objects])
 AM_SILENT_RULES([yes])
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 
@@ -107,6 +107,11 @@ AS_CASE([$host_os], [linux*|darwin*|mingw*|cygwin*|freebsd*],, [
 ])
 
 AC_SYS_LARGEFILE
+
+# The Check unit testing framework is optional. Disable if not found.
+PKG_CHECK_MODULES([check], [check >= 0.9.4],
+	[have_check="yes"], [have_check="no"])
+AM_CONDITIONAL(HAVE_CHECK, test x"$have_check" = "xyes")
 
 # Define size_t if not defined as standard.
 AC_TYPE_SIZE_T

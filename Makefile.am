@@ -70,3 +70,21 @@ dist-hook: ChangeLog
 
 doc: $(nodist_include_HEADERS) $(top_srcdir)/Doxyfile
 	doxygen $(top_srcdir)/Doxyfile
+
+if HAVE_CHECK
+
+TESTS = tests/main
+
+check_PROGRAMS = ${TESTS}
+
+tests_main_SOURCES = \
+	$(top_builddir)/libserialport.h \
+	tests/main.c \
+	tests/core.c \
+	tests/version.c
+
+tests_main_CFLAGS = @check_CFLAGS@
+
+tests_main_LDADD = $(top_builddir)/libserialport.la @check_LIBS@
+
+endif

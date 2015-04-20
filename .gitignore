@@ -16,3 +16,6 @@
 /libserialport.pc
 /libtool
 stamp-h?
+test-suite.log
+tests/*.log
+tests/*.trs
