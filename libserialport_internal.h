@@ -36,17 +36,7 @@
 #define _POSIX_C_SOURCE 199309L
 #endif
 
-#ifdef LIBSERIALPORT_ATBUILD
-/* If building with autoconf, include the generated config.h. */
-#include <config.h>
-#endif
-
-#ifdef LIBSERIALPORT_MSBUILD
-/* If building with MS tools, define necessary things that
-   would otherwise appear in config.h. */
-#define SP_PRIV
-#endif
-
+#include "config.h"
 #include "libserialport.h"
 
 #include <string.h>
@@ -127,7 +117,7 @@
 #endif
 
 /* Non-standard baudrates are not available everywhere. */
-#if (defined(HAVE_TERMIOS_SPEED) || defined(HAVE_TERMIOS2_SPEED)) && HAVE_DECL_BOTHER
+#if (defined(HAVE_TERMIOS_SPEED) || defined(HAVE_TERMIOS2_SPEED)) && defined(HAVE_BOTHER)
 #define USE_TERMIOS_SPEED
 #endif
 

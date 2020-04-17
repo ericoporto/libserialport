@@ -20,7 +20,9 @@
 #ifndef LIBSERIALPORT_LINUX_TERMIOS_H
 #define LIBSERIALPORT_LINUX_TERMIOS_H
 
+#include "config.h"
 #include <stdlib.h>
+#include <libserialport_export.h>
 
 SP_PRIV unsigned long get_termios_get_ioctl(void);
 SP_PRIV unsigned long get_termios_set_ioctl(void);

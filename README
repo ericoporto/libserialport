@@ -37,29 +37,64 @@ Dependencies
 
 No other libraries are required.
 
+Non-library build dependencies:
+
+ - cmake >= 3.12 (Mac OS X: cmake >= 3.17)
+ - A C compiler
+ - Doxygen (optional, only needed to build/install API documentation)
+
 Building
 ========
 
-On Windows, libserialport can be built with Visual Studio 2019 or with
-the standalone MSBuild tool, using the solution and project files provided.
+libserialport uses CMake as build system generator, and thus can be built
+on various OSes and using various development environments using the
+respective "CMake generator". For details please refer to the CMake docs:
 
-For other environments, the package uses a GNU style build based on autotools.
+ https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html
 
-Run "./autogen.sh" to generate the build system, "./configure" to setup, then
-"make" to build the library and "make install" to install it.
+Example on Linux:
 
-Windows builds can also be created using the autotools build system, using the
-MinGW-w64 toolchain from http://mingw-w64.sourceforge.net/ - either natively
-in Windows with the MSYS2 environment, or cross-compiling from another system.
+ $ mkdir build
+ $ cd build
+ $ cmake -DCMAKE_INSTALL_PREFIX=/some/path ..
+ $ make
+ $ make install
 
-To build from MSYS2, the following packages must be installed: autoconf,
-automake-wrapper, libtool, make, and either mingw-w64-i686-gcc (for 32-bit)
-or mingw-w64-x86_64-gcc (for 64-bit). Open either the "MSYS2 MinGW 32-bit" or
-"MSYS2 MinGW 64-bit" command window from the Start menu and use this when
-configuring and building the package. Using the "MSYS2 MSYS" shell will build
-against the Cygwin compatibility layer; this works, but port enumeration and
-metadata will not be available, and binaries will depend on Cygwin. The builds
-produced by MinGW-w64 are normal Windows DLLs without additional dependencies.
+On Mac OS X, libserialport can be built via Homebrew or Macports or Fink, or
+"natively" via Xcode.
+
+On Windows, libserialport can be built "natively" via Visual Studio, or using
+MSYS2, or using Cygwin, or using WSL, or using cross-compilation e.g. via MXE.
+
+To build from MSYS2, the following packages must be installed: cmake, make, and
+either mingw-w64-i686-gcc (for 32-bit) or mingw-w64-x86_64-gcc (for 64-bit).
+Open either the "MSYS2 MinGW 32-bit" or "MSYS2 MinGW 64-bit" command window
+from the Start menu and use the "MSYS Makefiles" CMake generator.
+Using the "MSYS2 MSYS" shell will build against the Cygwin compatibility layer;
+this works, but port enumeration and metadata will not be available, and
+binaries will depend on Cygwin. The builds produced by MinGW-w64 are normal
+Windows DLLs without additional dependencies.
+
+CMake options
+=============
+
+In addition to all standard CMake options, libserialport also provides:
+
+  - BUILD_SHARED_LIBS: Shared (non-static) build (default: TRUE)
+  - BUILD_TESTING: Build unit tests (default: TRUE)
+  - BUILD_EXAMPLES: Build examples (default: TRUE)
+  - BUILD_DOCS: Build/install documentation (default: FALSE)
+
+Usage in your project
+=====================
+
+If your project uses CMake, integrating libserialport can be done as follows:
+
+  find_package(serialport)
+  target_link_libraries(sometarget PRIVATE serialport::serialport)
+
+Otherwise, you can also use the standard pkg-config mechanism to find
+and use libserialport.
 
 API
 ===
@@ -68,7 +103,7 @@ Doxygen API documentation is included.
 
 It can also be viewed online at:
 
-  http://sigrok.org/api/libserialport/unstable/
+  https://sigrok.org/api/libserialport/unstable/
 
 Bug reports
 ===========
@@ -88,5 +123,5 @@ You can find the developers in the #sigrok IRC channel on Freenode.
 Website
 =======
 
-http://sigrok.org/wiki/Libserialport
+https://sigrok.org/wiki/Libserialport
 

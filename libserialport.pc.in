@@ -1,13 +1,13 @@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-includedir=@includedir@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
 Name: libserialport
 Description: Cross-platform serial port access library.
-URL: http://sigrok.org/wiki/Libserialport
-Requires.private: @SP_PKGLIBS@
-Version: @SP_PACKAGE_VERSION@
+URL: https://sigrok.org/wiki/Libserialport
+Requires.private:
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lserialport
 Libs.private: @SP_LIBS@
 Cflags: -I${includedir}
