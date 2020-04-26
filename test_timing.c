@@ -2,7 +2,14 @@
 #include "libserialport.h"
 #include "libserialport_internal.h"
 #include <assert.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#define SLEEP(x) Sleep(x * 1000)
+#else
 #include <unistd.h>
+#define SLEEP(x) sleep(x)
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -26,7 +33,7 @@ int main(int argc, char *argv[])
 	assert(tv.tv_usec == 50000);
 	time_get(&a);
 	printf("Sleeping for 1s\n");
-	sleep(1);
+	SLEEP(1);
 	time_get(&b);
 	time_sub(&b, &a, &c);
 	printf("Measured: %ums\n", time_as_ms(&c));
@@ -36,16 +43,16 @@ int main(int argc, char *argv[])
 	timeout_start(&to, 3000);
 	printf("Time to wait: %dms\n", timeout_remaining_ms(&to));
 	printf("Sleeping for 1s\n");
-	sleep(1);
+	SLEEP(1);
 	timeout_update(&to);
 	assert(!timeout_check(&to));
 	printf("Sleeping for 1s\n");
-	sleep(1);
+	SLEEP(1);
 	timeout_update(&to);
 	assert(!timeout_check(&to));
 	printf("Remaining: %ums\n", timeout_remaining_ms(&to));
 	printf("Sleeping for 1s\n");
-	sleep(1);
+	SLEEP(1);
 	timeout_update(&to);
 	assert(timeout_check(&to));
 	printf("Timeout expired\n");
@@ -55,12 +62,12 @@ int main(int argc, char *argv[])
 	timeout_limit(&to, 1000);
 	printf("Time to wait: %ums\n", timeout_remaining_ms(&to));
 	printf("Sleeping for 1s\n");
-	sleep(1);
+	SLEEP(1);
 	timeout_update(&to);
 	assert(!timeout_check(&to));
 	printf("Remaining: %ums\n", timeout_remaining_ms(&to));
 	printf("Sleeping for 1s\n");
-	sleep(1);
+	SLEEP(1);
 	timeout_update(&to);
 	assert(timeout_check(&to));
 	printf("Timeout expired\n");
