@@ -7,12 +7,12 @@
  * This example file is released to the public domain. */
 
 /* Pointers used in the program to resources that may need to be freed. */
-struct sp_port **port_list = NULL;
-struct sp_port_config *config = NULL;
-struct sp_port *port = NULL;
+static struct sp_port **port_list = NULL;
+static struct sp_port_config *config = NULL;
+static struct sp_port *port = NULL;
 
 /* Example of a function to clean up and exit the program with a given return code. */
-void end_program(int return_code)
+static void end_program(int return_code)
 {
 	/* Free any structures we allocated. */
 	if (port_list != NULL)
@@ -27,7 +27,7 @@ void end_program(int return_code)
 }
 
 /* Example of a helper function for error handling. */
-int check(enum sp_return result)
+static int check(enum sp_return result)
 {
 	int error_code;
 	char *error_message;
@@ -46,6 +46,7 @@ int check(enum sp_return result)
 		 * the calling code. */
 		printf("Error: Invalid argument.\n");
 		end_program(1);
+		break;
 
 	case SP_ERR_FAIL:
 		/* When SP_ERR_FAIL is returned, there was an error from the OS,
@@ -61,6 +62,7 @@ int check(enum sp_return result)
 		/* The error message should be freed after use. */
 		sp_free_error_message(error_message);
 		end_program(2);
+		break;
 
 	case SP_ERR_SUPP:
 		/* When SP_ERR_SUPP is returned, the function was asked to do
@@ -69,6 +71,7 @@ int check(enum sp_return result)
 		 * version. */
 		printf("Error: Not supported.\n");
 		end_program(3);
+		break;
 
 	case SP_ERR_MEM:
 		/* When SP_ERR_MEM is returned, libserialport wasn't able to
@@ -81,8 +84,9 @@ int check(enum sp_return result)
 		 * In this example, we'll just try to exit gracefully without
 		 * calling printf, which might need to allocate further memory. */
 		end_program(4);
+		break;
 
-	case SP_OK:
+	case SP_OK: /* Fallthrough */
 	default:
 		/* A return value of SP_OK, defined as zero, means that the
 		 * operation succeeded. */
@@ -95,9 +99,11 @@ int check(enum sp_return result)
 		 * that it can be used. */
 		return result;
 	}
+
+	return result;
 }
 
-int main(int argc, char **argv)
+int main(void)
 {
 	/* Call some functions that should not result in errors. */
 

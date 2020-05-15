@@ -162,7 +162,7 @@ SP_API enum sp_transport sp_get_port_transport(const struct sp_port *port)
 }
 
 SP_API enum sp_return sp_get_port_usb_bus_address(const struct sp_port *port,
-                                                  int *usb_bus,int *usb_address)
+                                                  int *usb_bus, int *usb_address)
 {
 	TRACE("%p", port);
 
@@ -998,7 +998,7 @@ SP_API enum sp_return sp_nonblocking_write(struct sp_port *port,
 
 	if (written < 0) {
 		if (errno == EAGAIN)
-			// Buffer is full, no bytes written.
+			/* Buffer is full, no bytes written. */
 			RETURN_INT(0);
 		else
 			RETURN_FAIL("write() failed");
@@ -1756,7 +1756,7 @@ static enum sp_return get_config(struct sp_port *port, struct port_data *data,
 			config->xon_xoff = SP_XONXOFF_DISABLED;
 	}
 
-#else // !_WIN32
+#else /* !_WIN32 */
 
 	if (tcgetattr(port->fd, &data->term) < 0)
 		RETURN_FAIL("tcgetattr() failed");

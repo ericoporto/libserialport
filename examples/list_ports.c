@@ -5,7 +5,7 @@
  *
  * This example file is released to the public domain. */
 
-int main(int argc, char **argv)
+int main(void)
 {
 	/* A pointer to a null-terminated array of pointers to
 	 * struct sp_port, which will contain the ports found.*/

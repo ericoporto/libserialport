@@ -8,7 +8,7 @@
  * This example file is released to the public domain. */
 
 /* Helper function for error handling. */
-int check(enum sp_return result);
+static int check(enum sp_return result);
 
 int main(int argc, char **argv)
 {
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 }
 
 /* Helper function for error handling. */
-int check(enum sp_return result)
+static int check(enum sp_return result)
 {
 	/* For this example we'll just exit on any error by calling abort(). */
 	char *error_message;
